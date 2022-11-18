@@ -3,14 +3,11 @@ QT += quick
 SOURCES += \
         main.cpp
 
-resources.files = main.qml 
+resources.files = main.qml MainScreen.qml UiButton.qml \
+                    UiRoundButton.qml Home-icon.svg styles.js \
+                    background.webp logo.png Account.qml
 resources.prefix = /$${TARGET}
 RESOURCES += resources
-
-TRANSLATIONS += \
-    UIDesign_en_US.ts
-CONFIG += lrelease
-CONFIG += embed_translations
 
 # Additional import path used to resolve QML modules in Qt Creator's code model
 QML_IMPORT_PATH =
@@ -22,3 +19,12 @@ QML_DESIGNER_IMPORT_PATH =
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+HEADERS +=
+
+DISTFILES += \
+    Account.qml \
+    Home-icon.svg \
+    background.webp \
+    logo.png \
+    styles.js
