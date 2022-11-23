@@ -1,0 +1,23 @@
+<!DOCTYPE RCC><RCC version="1.0">
+<qresource prefix="/UiDesign">
+<file alias="main.qml">/Users/marius/Dropbox/Uni/UMass/User Interface Design/UIDesign/UiDesign/main.qml</file>
+<file alias="MainScreen.qml">/Users/marius/Dropbox/Uni/UMass/User Interface Design/UIDesign/UiDesign/MainScreen.qml</file>
+<file alias="UiButton.qml">/Users/marius/Dropbox/Uni/UMass/User Interface Design/UIDesign/UiDesign/UiButton.qml</file>
+<file alias="UiRoundButton.qml">/Users/marius/Dropbox/Uni/UMass/User Interface Design/UIDesign/UiDesign/UiRoundButton.qml</file>
+<file alias="Home-icon.svg">/Users/marius/Dropbox/Uni/UMass/User Interface Design/UIDesign/UiDesign/Home-icon.svg</file>
+<file alias="styles.js">/Users/marius/Dropbox/Uni/UMass/User Interface Design/UIDesign/UiDesign/styles.js</file>
+<file alias="background.webp">/Users/marius/Dropbox/Uni/UMass/User Interface Design/UIDesign/UiDesign/background.webp</file>
+<file alias="logo.png">/Users/marius/Dropbox/Uni/UMass/User Interface Design/UIDesign/UiDesign/logo.png</file>
+<file alias="Account.qml">/Users/marius/Dropbox/Uni/UMass/User Interface Design/UIDesign/UiDesign/Account.qml</file>
+<file alias="SpeechBubble.qml">/Users/marius/Dropbox/Uni/UMass/User Interface Design/UIDesign/UiDesign/SpeechBubble.qml</file>
+<file alias="BubbleList.qml">/Users/marius/Dropbox/Uni/UMass/User Interface Design/UIDesign/UiDesign/BubbleList.qml</file>
+<file alias="BubbleComponent.qml">/Users/marius/Dropbox/Uni/UMass/User Interface Design/UIDesign/UiDesign/BubbleComponent.qml</file>
+<file alias="Examination.qml">/Users/marius/Dropbox/Uni/UMass/User Interface Design/UIDesign/UiDesign/Examination.qml</file>
+<file alias="Results.qml">/Users/marius/Dropbox/Uni/UMass/User Interface Design/UIDesign/UiDesign/Results.qml</file>
+<file alias="SickNote.qml">/Users/marius/Dropbox/Uni/UMass/User Interface Design/UIDesign/UiDesign/SickNote.qml</file>
+<file alias="Appointment.qml">/Users/marius/Dropbox/Uni/UMass/User Interface Design/UIDesign/UiDesign/Appointment.qml</file>
+<file alias="Card.qml">/Users/marius/Dropbox/Uni/UMass/User Interface Design/UIDesign/UiDesign/Card.qml</file>
+<file alias="Prescriptions.qml">/Users/marius/Dropbox/Uni/UMass/User Interface Design/UIDesign/UiDesign/Prescriptions.qml</file>
+<file alias="MedicationDialog.qml">/Users/marius/Dropbox/Uni/UMass/User Interface Design/UIDesign/UiDesign/MedicationDialog.qml</file>
+</qresource>
+</RCC>
