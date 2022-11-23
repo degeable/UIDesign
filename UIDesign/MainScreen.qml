@@ -7,14 +7,32 @@ import "styles.js" as Style
 Rectangle {
     id: root
 
-    signal buttonClicked(button: string)
+    signal buttonClicked(string button)
+    // change this because of bug in UI. Change later when I use bottom nav bar
     property bool loggedIn: false
     onLoggedInChanged: console.log(loggedIn, " Changed")
-
-    onButtonClicked: button => {
-        if (button === "Login") {
-            root.loggedIn = true
+    Component.onCompleted: {
+        if (loggedIn) {
+            login()
         }
+        buttonsAnimation.start()
+        logoAnimation.start()
+    }
+    onButtonClicked: button => {
+                         if (button === "Login") {
+                             root.loggedIn = true
+                             login()
+                         }
+                     }
+
+    function login() {
+        loggedOutModel.clear()
+        loggedOutModel.append({
+                                  "name": "Account"
+                              })
+        loggedOutModel.append({
+                                  "name": "Start Examination"
+                              })
     }
 
     Settings {
@@ -22,7 +40,6 @@ Rectangle {
 
         property alias login: root.loggedIn
     }
-
 
     color: "transparent"
 
@@ -48,11 +65,6 @@ Rectangle {
         ListElement {
             name: "Start Examination"
         }
-    }
-
-    Component.onCompleted: {
-        buttonsAnimation.start();
-        logoAnimation.start();
     }
 
     Image {
@@ -105,6 +117,7 @@ Rectangle {
         height: parent.height / 3
 
         delegate: UiRoundButton {
+            id: comp
             width: parent.width
             height: Style.roundButtonHeight
 
@@ -115,10 +128,20 @@ Rectangle {
         }
 
         populate: Transition {
-            NumberAnimation { property: "opacity"; from: 0; to: 1.0; duration: Style.changeAnimationTime }
-            NumberAnimation { property: "scale"; from: 0; to: 1.0; duration: Style.changeAnimationTime }
+            NumberAnimation {
+                property: "opacity"
+                from: 0
+                to: 1.0
+                duration: Style.changeAnimationTime
+            }
+            NumberAnimation {
+                property: "scale"
+                from: 0
+                to: 1.0
+                duration: Style.changeAnimationTime
+            }
         }
 
-        model: root.loggedIn ? loggedInModel : loggedOutModel
+        model: /*root.loggedIn ? loggedInModel :*/ loggedOutModel
     }
 }
