@@ -33,6 +33,12 @@ Rectangle {
         loggedOutModel.append({
                                   "name": "Start Examination"
                               })
+        loggedOutModel.append({
+                                  "name": "Book Appointment"
+                              })
+        loggedOutModel.append({
+                                  "name": "Prescriptions"
+                              })
     }
 
     Settings {

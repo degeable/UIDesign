@@ -36,6 +36,8 @@ import "styles.js" as Style
             isButton: model.isButton ? model.isButton  : false
             isDate: model.isDate ? model.isDate : false
             isYesOrNo: model.isYesOrNo ? model.isYesOrNo : false
+            yesText: model.yesText ? model.yesText : "Yes"
+            noText: model.noText ? model.noText : "No"
             onAddNextBubble: nextBubbleTriggered()
             onFinished: fin()
            // https://stackoverflow.com/questions/26717068/qml-define-function-in-listelement-called-in-listview

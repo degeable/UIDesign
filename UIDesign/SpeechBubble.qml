@@ -21,6 +21,8 @@ Rectangle {
     property bool isYesOrNo: false
     property alias dropDown: dropDown
     property bool showCorners: true
+    property alias yesText:  yes.text
+    property alias noText: no.text
 
     width: root.width / 1.5
     height: isButton
@@ -253,7 +255,6 @@ Rectangle {
                     }
                     TextField {
                         id: feld
-                        horizontalAlignment: Text.AlignRight
                         color: Style.darkTextColor
                         Layout.fillWidth: true
                     }
@@ -327,7 +328,6 @@ Rectangle {
             addNextBubble()
         }
     }
-    // TODO yes no options
     Row {
         anchors.centerIn: parent
         anchors.margins: 50
@@ -339,7 +339,7 @@ Rectangle {
             // TODO make this redoable this somehow
             width: 100
             height: 40
-            text: "Yes"
+            onTextChanged: console.log("buttonText:", yes.text)
             onClicked: {
                 addNextBubble()
                 enabled = false
@@ -351,7 +351,8 @@ Rectangle {
             // TODO make this redoable this somehow
             width: 100
             height: 40
-            text: "No"
+            onTextChanged: console.log("buttonText:", no.text)
+
             onClicked: {
                 addNextBubble()
                 enabled = false
