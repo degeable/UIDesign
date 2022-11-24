@@ -13,7 +13,7 @@ Rectangle {
 
         ListElement {
             isText: true
-            text: "Do you want to update financial information? \n (only no in the prototype)"
+            text: "Do you want to update \nfinancial information? \n (only no in the prototype)"
         }
         ListElement {
             isLeft: true
@@ -23,7 +23,7 @@ Rectangle {
 
         ListElement {
             isText: true
-            text: "Do you want your medication for delivery or pickup?\n (only delevery in prototype)"
+            text: "Do you want your medication \nfor delivery or pickup?\n (only delevery in prototype)"
         }
         ListElement {
             isLeft: true
@@ -35,7 +35,7 @@ Rectangle {
 
         ListElement {
             isText: true
-            text: "Do you need to update your shipping address? \n (only yes in the prototype)"
+            text: "Do you need to update \nyour shipping address? \n (only yes in the prototype)"
         }
         ListElement {
             isLeft: true
@@ -54,12 +54,12 @@ Rectangle {
 
         ListElement {
             isText: true
-            text: "Painkiller XYZ for delivery. Please confirm. \n (only confirm in the prototype)"
+            text: "Painkiller XYZ for delivery.\nPlease confirm. \n (only confirm in the prototype)"
         }
 
         ListElement {
             isLeft: false
-            text: "Okay"
+            text: "Confirm"
             isButton: true
         }
     }
