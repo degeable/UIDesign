@@ -10,6 +10,11 @@ BasePage {
 
     background: "../images/backgroundGreen.jpg"
 
+    onVisibleChanged: {
+        if (visible)
+            accountButton.checked = true
+    }
+
     ListModel {
         id: model
 
@@ -88,5 +93,6 @@ BasePage {
 
     Component.onCompleted: {
         buttonsAnimation.start()
+     //   checkButton(4)
     }
 }

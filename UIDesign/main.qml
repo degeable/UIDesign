@@ -15,19 +15,50 @@ Window {
     visible: true
     title: "UntitledProject"
 
+    ListModel {
+        id: globalNotificationModel
+    }
+
+    Component.onCompleted: {
+        globalNotificationModel.append({
+                                           "text": "Notific 1"
+                                       })
+        globalNotificationModel.append({
+                                           "text": "Notific 2"
+                                       })
+    }
+
     StackLayout {
         id: layout
 
         anchors.fill: parent
-       Behavior on currentIndex {
-            NumberAnimation { property: "opacity"; to: 1.0; duration: 500 }
+        Behavior on currentIndex {
+            NumberAnimation {
+                property: "opacity"
+                to: 1.0
+                duration: 500
+            }
         }
 
-        LoginPage {id: loginPage}
-        HomePage {id: homePage}
-        AccountPage {id: accountPage}
-        ExaminationDialog { id: examDialog }
-
+        LoginPage {
+            id: loginPage
+        }
+        HomePage {
+            id: homePage
+            notificationModel: globalNotificationModel
+        }
+        AccountPage {
+            id: accountPage
+        }
+        ExaminationPage {
+            id: examPage
+        }
+        PrescriptionPage {
+            id: prescriptionPage
+        }
+        AppointmentPage {
+            id: appointmentPage
+        }
     }
 
     SM.StateMachine {
@@ -40,22 +71,179 @@ Window {
             id: loginState
 
             onEntered: layout.currentIndex = 0
-            SM.SignalTransition { targetState: homeState; signal: loginPage.done }
+
+            SM.SignalTransition {
+                targetState: homeState
+                signal: loginPage.homePage
+            }
+            SM.SignalTransition {
+                targetState: examState
+                signal: loginPage.examinationPage
+            }
+            SM.SignalTransition {
+                targetState: loginState
+                signal: loginPage.loginPage
+            }
+            SM.SignalTransition {
+                targetState: accountState
+                signal: loginPage.accountPage
+            }
+            SM.SignalTransition {
+                targetState: prescriptionState
+                signal: loginPage.prescriptionPage
+            }
+            SM.SignalTransition {
+                targetState: appointmentState
+                signal: loginPage.appointmentPage
+            }
         }
 
         SM.State {
             id: homeState
 
             onEntered: layout.currentIndex = 1
-            SM.SignalTransition { targetState: examState; signal: homePage.done }
+            SM.SignalTransition {
+                targetState: homeState
+                signal: homePage.homePage
+            }
+            SM.SignalTransition {
+                targetState: examState
+                signal: homePage.examinationPage
+            }
+            SM.SignalTransition {
+                targetState: loginState
+                signal: homePage.loginPage
+            }
+            SM.SignalTransition {
+                targetState: accountState
+                signal: homePage.accountPage
+            }
+            SM.SignalTransition {
+                targetState: prescriptionState
+                signal: homePage.prescriptionPage
+            }
+            SM.SignalTransition {
+                targetState: appointmentState
+                signal: homePage.appointmentPage
+            }
+        }
+
+        SM.State {
+            id: accountState
+
+            onEntered: layout.currentIndex = 2
+            SM.SignalTransition {
+                targetState: homeState
+                signal: accountPage.homePage
+            }
+            SM.SignalTransition {
+                targetState: examState
+                signal: accountPage.examinationPage
+            }
+            SM.SignalTransition {
+                targetState: loginState
+                signal: accountPage.loginPage
+            }
+            SM.SignalTransition {
+                targetState: accountState
+                signal: accountPage.accountPage
+            }
+            SM.SignalTransition {
+                targetState: prescriptionState
+                signal: accountPage.prescriptionPage
+            }
+            SM.SignalTransition {
+                targetState: appointmentState
+                signal: accountPage.appointmentPage
+            }
         }
 
         SM.State {
             id: examState
 
-            onEntered: layout.currentIndex = 2
-            SM.SignalTransition { targetState: loginState; signal: examDialog.done }
+            onEntered: layout.currentIndex = 3
+            SM.SignalTransition {
+                targetState: homeState
+                signal: examPage.homePage
+            }
+            SM.SignalTransition {
+                targetState: examState
+                signal: examPage.examinationPage
+            }
+            SM.SignalTransition {
+                targetState: loginState
+                signal: examPage.loginPage
+            }
+            SM.SignalTransition {
+                targetState: accountState
+                signal: examPage.accountPage
+            }
+            SM.SignalTransition {
+                targetState: prescriptionState
+                signal: examPage.prescriptionPage
+            }
+            SM.SignalTransition {
+                targetState: appointmentState
+                signal: examPage.appointmentPage
+            }
+        }
+        SM.State {
+            id: prescriptionState
+
+            onEntered: layout.currentIndex = 4
+            SM.SignalTransition {
+                targetState: homeState
+                signal: prescriptionPage.homePage
+            }
+            SM.SignalTransition {
+                targetState: examState
+                signal: prescriptionPage.examinationPage
+            }
+            SM.SignalTransition {
+                targetState: loginState
+                signal: prescriptionPage.loginPage
+            }
+            SM.SignalTransition {
+                targetState: accountState
+                signal: prescriptionPage.accountPage
+            }
+            SM.SignalTransition {
+                targetState: prescriptionState
+                signal: prescriptionPage.prescriptionPage
+            }
+            SM.SignalTransition {
+                targetState: appointmentState
+                signal: prescriptionPage.appointmentPage
+            }
+        }
+        SM.State {
+            id: appointmentState
+
+            onEntered: layout.currentIndex = 5
+            SM.SignalTransition {
+                targetState: homeState
+                signal: appointmentPage.homePage
+            }
+            SM.SignalTransition {
+                targetState: examState
+                signal: appointmentPage.examinationPage
+            }
+            SM.SignalTransition {
+                targetState: loginState
+                signal: appointmentPage.loginPage
+            }
+            SM.SignalTransition {
+                targetState: accountState
+                signal: appointmentPage.accountPage
+            }
+            SM.SignalTransition {
+                targetState: prescriptionState
+                signal: appointmentPage.prescriptionPage
+            }
+            SM.SignalTransition {
+                targetState: appointmentState
+                signal: appointmentPage.appointmentPage
+            }
         }
     }
 }
-

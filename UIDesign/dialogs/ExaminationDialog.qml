@@ -2,18 +2,16 @@ import QtQuick 2.15
 import "../components"
 import "../styles.js" as Style
 
-Rectangle {
+BaseDialog {
     id: root
 
     color: "transparent"
 
-    signal done
-
-    ListModel {
+    bubbleModel: ListModel {
         id: bubbleModel
 
         ListElement {
-            isLeft: false
+            ilsLeft: false
             isText: true
             isDropDown: false
             dropDownModel: ""
@@ -83,7 +81,7 @@ Rectangle {
         }
     }
 
-    ListModel {
+    initialModel: ListModel {
         id: initialModel
 
         ListElement {
@@ -108,13 +106,6 @@ Rectangle {
             isButton: false
             text: ""
         }
-    }
-
-    BubbleList {
-        id: content
-
-        initialModel: initialModel
-        bubbleModel: bubbleModel
     }
 }
 

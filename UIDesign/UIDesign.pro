@@ -8,6 +8,9 @@ resources.files = styles.js \
                   pages/LoginPage.qml \
                   pages/AccountPage.qml \
                   pages/HomePage.qml \
+                  pages/ExaminationPage.qml \
+                  pages/PrescriptionPage.qml \
+                  pages/AppointmentPage.qml \
                   components/UiButton.qml \
                   components/IconButton.qml \
                   components/UiRoundButton.qml \
@@ -23,6 +26,9 @@ resources.files = styles.js \
                   images/backgroundPurple.jpg \
                   images/backgroundCircle.jpg \
                   images/background.webp \
+                  images/chatGreen.jpg \
+                  images/chatGreenLight.jpg \
+                  images/chatBlue.jpg \
                   icons/logo.svg \
                   icons/heart.svg \
                   icons/account.svg \
@@ -30,7 +36,6 @@ resources.files = styles.js \
                   icons/report.svg \
                   icons/pills.svg \
                   icons/examination.svg \
-                  icons/appointment.svg \
                   icons/appointment.png \
                   icons/bell.svg \
                   icons/bellAlert.svg \
@@ -38,6 +43,7 @@ resources.files = styles.js \
                   icons/news.svg \
                   icons/next.svg \
                   icons/doc.svg \
+                  icons/darkLogo.svg \
                   $$files(qml/*.qml) \
                   $$files(pages/*.qml) \
                   $$files(images/*.png) \
@@ -75,6 +81,11 @@ DISTFILES += \
     icons/yellowCard.png \
     images/background.webp \
     main.qml \
+    pages/AppointmentPage.qml \
     pages/BasePage.qml \
+    pages/ExaminationPage.qml \
     pages/LoginPage.qml \
+    pages/LoginPage.qml \
+    pages/AccountPage.qml \
+    pages/PrescriptionPage.qml \
     styles.js

@@ -16,8 +16,7 @@ BasePage {
 
     background: "../images/background.webp"
 
-    //contents:
-        ListModel {
+    ListModel {
         id: model
 
         ListElement {
@@ -62,7 +61,7 @@ BasePage {
             id: comp
 
             anchors.horizontalCenter: parent.horizontalCenter
-            baseColor:  eval(model.color)
+            baseColor: eval(model.color)
             onClicked: buttonClicked(model.name)
             text: model.name
         }
@@ -75,8 +74,10 @@ BasePage {
         property: "opacity"
         duration: Style.startAnimationTime
         onFinished: {
-            if (root.loggedIn)
+            if (root.loggedIn) {
                 done("loggedIn")
+                homePage()
+            }
         }
         from: root.loggedIn ? 1 : 0
         to: root.loggedIn ? 0 : 1
@@ -91,7 +92,6 @@ BasePage {
         from: root.loggedIn ? 1 : 0
         to: root.loggedIn ? 0 : 1
     }
-
 
     Component.onCompleted: {
         buttonList.opacity = 1

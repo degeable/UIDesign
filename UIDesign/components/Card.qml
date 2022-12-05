@@ -1,6 +1,7 @@
 import QtQuick 2.15
 import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.15
+import Qt5Compat.GraphicalEffects
 import "../styles.js" as Style
 
 Rectangle {
@@ -17,6 +18,7 @@ Rectangle {
     property alias mouseArea: mouseArea
     property alias headerHeight: header.height
     property alias headerIcon: headerIcon.source
+    property alias headerIconColor: overlay.color
     default property alias contents: content.data
 
 
@@ -68,6 +70,16 @@ Rectangle {
 
             width: Style.buttonIconSize
             height: Style.buttonIconSize
+        }
+
+        ColorOverlay {
+            id: overlay
+
+            anchors.fill: headerIcon
+            source:headerIcon
+            color: "black"
+            antialiasing: true
+            visible: true
         }
     }
 

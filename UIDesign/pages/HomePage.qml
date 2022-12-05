@@ -3,6 +3,7 @@ import QtQuick.Window 6.2
 import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.15
 import Qt.labs.settings 1.0
+import Qt5Compat.GraphicalEffects
 import "../components"
 import "../icons"
 import "../styles.js" as Style
@@ -10,22 +11,136 @@ import "../styles.js" as Style
 BasePage {
     id: root
 
-    property bool newNotification: true
+    property bool newNotification: notificationModel.count > 0 // get length of model
+    property ListModel notificationModel: undefined
 
     background: "../images/backgroundPurple.jpg"
 
     headerVisible: false
+
+    onVisibleChanged: {
+        if (visible)
+            homeButton.checked = true
+    }
+
+    Dialog {
+        id: notificationDialog
+        modal: true
+
+        anchors.centerIn: parent
+        width: parent.width - Style.baseMargin * 10
+        height: parent.height - Style.baseMargin * 30
+        standardButtons: Dialog.Ok | Dialog.Cancel
+
+        onAccepted: console.log("Ok clicked")
+        onRejected: console.log("Cancel clicked")
+
+        Overlay.modal: FastBlur {
+            source: ShaderEffectSource {
+                sourceItem: root
+                live: false
+            }
+            radius: 20
+
+        }
+
+        header: Label {
+            id: dialogHeader
+
+            z: 2
+            text: "Notifications"
+            elide: Label.ElideRight
+            font.bold: true
+            font.pointSize: 20
+            color: Style.darkTextColor
+            padding: 12
+            background: Rectangle {
+                anchors.fill: parent
+                anchors.margins: 3
+                color: "white"
+                radius: 30
+            }
+        }
+
+        footer: DialogButtonBox {
+            alignment: Qt.AlignHCenter
+            background: Rectangle {
+                anchors.fill: parent
+                anchors.margins: 4
+                radius: 30
+                color: "white"
+            }
+        }
+
+        background: Rectangle {
+            color: "transparent"
+            border.color: "black"
+            radius: 30
+        }
+        contentItem: Rectangle {
+            anchors.fill: parent
+            anchors.margins: 2
+            color: "white"
+            radius: 30
+            ListView {
+               anchors.fill: parent
+                anchors.topMargin: dialogHeader.height + 5
+                spacing: 15
+
+                model: notificationModel
+                 delegate: Rectangle {
+                    color: Style.blueBase
+                    anchors.left: parent.left
+                    anchors.right: parent.right
+                    anchors.leftMargin: 50
+                    anchors.rightMargin: 50
+
+                    height: 50
+                    radius: 10
+                    MouseArea {
+                        anchors.fill: parent
+                        onClicked: console.log(model.text)
+                    }
+
+                    Row {
+                        id: row
+                        anchors.centerIn: parent
+                        spacing: 20
+                        Image {
+                            source: "../icons/bell.svg"
+                            width: Style.buttonIconSize
+                            height: Style.buttonIconSize
+                        }
+                        Column {
+                            width: row.width / 2
+                            Text {
+                                text: ""
+                            }
+                            Text {
+                                text: model.text
+                            }
+                        }
+                        Image {
+                            source: "../icons/next.svg"
+                            width: Style.buttonIconSize
+                            height: Style.buttonIconSize
+                        }
+                    }
+                }
+            }
+        }
+    }
 
     IconImage {
         id: icon
 
         anchors.top: parent.top
         anchors.left: parent.left
-        anchors.leftMargin: -icon.width / 3
+        anchors.leftMargin: -40
         anchors.topMargin: -icon.height / 1.8
 
         scale: 0.5
-        source: "../icons/heart.svg"
+        source: "../icons/darkLogo.svg"
     }
 
     IconButton {
@@ -40,6 +155,8 @@ BasePage {
         width: Style.buttonIconSize * 2.3
         baseColor: Style.lightPurple
         source: root.newNotification ? "../icons/bellAlert.svg" : "../icons/bell.svg"
+
+        onClicked: notificationDialog.open()
     }
 
     Row {
@@ -80,8 +197,9 @@ BasePage {
         headerHeight: Style.roundButtonHeight
 
         headerColor: Style.darkBlue
+        headerTextColor: Style.lightGray
+        headerIconColor: "white"
         headerIcon: "../icons/news.svg"
-        color: "white"
 
         headerText: "News"
         headerFont.bold: true
@@ -170,5 +288,4 @@ BasePage {
             }
         }
     }
-
 }

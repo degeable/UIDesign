@@ -7,24 +7,60 @@ import "../components"
 Rectangle {
     id: root
 
-    signal done(button: string)
+    signal done(string button)
 
+    signal homePage
+    signal accountPage
+    signal loginPage
+    signal examinationPage
+    signal appointmentPage
+    signal prescriptionPage
+
+    property int buttonId
     property alias background: background.source
     property alias backgroundOpacity: background.opacity
     property alias headerVisible: header.visible
     property alias footerVisible: footer.visible
     default property alias contents: content.data
 
+    property alias homeButton: homeButton
+    property alias examinationButton: examinationButton
+    property alias accountButton: accountButton
+    property alias prescriptionButton: prescriptionButton
+    property alias appointmentButton: appointmentButton
     color: "transparent"
 
+    Behavior on width {
+        NumberAnimation {
+            duration: Style.loaderAnimationTime
+        }
+    }
+
     states: [
-        State { when: root.visible;
-                PropertyChanges {   target: root; opacity: 1.0 }},
-        State { when: !root.visible;
-                PropertyChanges {   target: root; opacity: 0.0 }}
+        State {
+            when: root.visible
+            PropertyChanges {
+                target: content
+                opacity: 1.0
+            }
+        },
+        State {
+            when: !root.visible
+            PropertyChanges {
+                target: content
+                opacity: 0.0
+            }
+        }
     ]
 
-    transitions: [ Transition { NumberAnimation { property: "opacity"; duration: Style.pageTransitionDuration}} ]
+    transitions: [
+        Transition {
+            NumberAnimation {
+                property: "opacity"
+                duration: Style.pageTransitionDuration
+            }
+        }
+    ]
 
     Image {
         id: background
@@ -44,7 +80,7 @@ Rectangle {
 
         height: Style.headerHeight
         color: Style.headerColor
-
+        z: 2
         Rectangle {
             anchors.left: header.left
             anchors.right: header.right
@@ -76,53 +112,75 @@ Rectangle {
         ButtonGroup {
             id: menuGrp
         }
-          Row {
-              anchors.fill: parent
-               IconButton {
-                   checkable: true
-                   width: parent.width / 5
-                   height: parent.height
-                   showBorder: false
-                   source: "../icons/examination.svg"
-                   underText: "Exam"
-                   ButtonGroup.group: menuGrp
-               }
-               IconButton {
-                   checkable: true
-                   width: parent.width / 5
-                   height: parent.height
-                   showBorder: false
-                   source: "../icons/medicine.svg"
-                   underText: "Prescr."
-                   ButtonGroup.group: menuGrp
-               }
-               IconButton {
-                   checkable: true
-                   width: parent.width / 5
-                   height: parent.height
-                   showBorder: false
-                   source: "../icons/home.svg"
-                   ButtonGroup.group: menuGrp
-               }
-               IconButton {
-                   checkable: true
-                   width: parent.width / 5
-                   height: parent.height
-                   showBorder: false
-                   source: "../icons/appointment.png"
-                   underText: "Appoint."
-                   ButtonGroup.group: menuGrp
-               }
-               IconButton {
-                   checkable: true
-                   width: parent.width / 5
-                   height: parent.height
-                   showBorder: false
-                   source: "../icons/account.svg"
-                   underText: "Account"
-                   ButtonGroup.group: menuGrp
-               }
-           }
+        Row {
+            anchors.fill: parent
+            IconButton {
+                id: examinationButton
+
+                checkable: true
+                width: parent.width / 5
+                height: parent.height
+                showBorder: false
+                source: "../icons/examination.svg"
+                underText: "Exam"
+                ButtonGroup.group: menuGrp
+
+                onClicked: examinationPage()
+            }
+            IconButton {
+                id: prescriptionButton
+
+                checkable: true
+                width: parent.width / 5
+                height: parent.height
+                showBorder: false
+                source: "../icons/medicine.svg"
+                underText: "Prescr."
+                ButtonGroup.group: menuGrp
+
+                onClicked: prescriptionPage()
+            }
+            IconButton {
+                id: homeButton
+
+                checked: true
+                checkable: true
+                width: parent.width / 5
+                height: parent.height
+                showBorder: false
+                source: "../icons/home.svg"
+                ButtonGroup.group: menuGrp
+
+                onClicked: homePage()
+            }
+            IconButton {
+                id: appointmentButton
+
+                checked: false
+                checkable: true
+                width: parent.width / 5
+                height: parent.height
+                showBorder: false
+                source: "../icons/appointment.png"
+                underText: "Appoint."
+                ButtonGroup.group: menuGrp
+
+                onClicked: appointmentPage()
+            }
+            IconButton {
+                id: accountButton
+
+                checkable: true
+                width: parent.width / 5
+                height: parent.height
+                showBorder: false
+                source: "../icons/account.svg"
+                underText: "Account"
+                ButtonGroup.group: menuGrp
+
+                onClicked: accountPage()
+            }
+        }
 
         Rectangle {
             anchors.left: footer.left
