@@ -11,6 +11,8 @@ Rectangle {
 
     property ListModel bubbleModel: undefined
     property ListModel initialModel: undefined
+    property alias actualModel: content.actualModel
+    property alias bubbleCounter: content.bubbleCounter
 
     BubbleList {
         id: content

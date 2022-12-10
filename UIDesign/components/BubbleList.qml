@@ -6,24 +6,55 @@ ListView {
 
     property ListModel initialModel: undefined
     property ListModel bubbleModel: undefined
+    property alias actualModel: actualModel
     property int bubbleCounter: 0
 
     anchors.topMargin: 20
     anchors.bottomMargin: 20
 
     function nextBubbleTriggered() {
-        initialModel.append(bubbleModel.get(bubbleCounter++))
-        initialModel.append(bubbleModel.get(bubbleCounter++))
+        actualModel.append(bubbleModel.get(bubbleCounter++))
+        actualModel.append(bubbleModel.get(bubbleCounter++))
     }
 
-    function fin(){
+    function fin() {
         done()
+    }
+
+    ListModel {
+        id: actualModel
+    }
+
+    Timer {
+        id: firstBubbleTimer
+        interval: 200
+        repeat: false
+        running: false
+        onTriggered: actualModel.append(initialModel.get(0))
+    }
+
+    Timer {
+        id: secondBubbleTimer
+        interval: 1800
+        repeat: false
+        running: false
+        onTriggered: {
+            actualModel.append(initialModel.get(1))
+            actualModel.append(initialModel.get(2))
+        }
+    }
+
+   onVisibleChanged: {
+        if (visible && actualModel.count === 0) {
+            firstBubbleTimer.start()
+            secondBubbleTimer.start()
+        }
     }
 
     onCountChanged: content.currentIndex = count - 1
     anchors.fill: parent
     spacing: 20
-    model: initialModel
+    model: actualModel
 
     delegate: BubbleComponent {}
 

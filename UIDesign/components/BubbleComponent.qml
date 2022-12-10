@@ -6,23 +6,20 @@ import "../styles.js" as Style
     Rectangle {
         color: "transparent"
 
-        anchors.left: parent.left
-        anchors.right: parent.right
-      //  height: bubble.height
-        height: bubble.height// Math.max(Style.bubbleMinHeight, childrenRect.height + 20)
-        Component.onCompleted: console.log(height, bubble.height)
-        width: parent.width
+        height: bubble.height
+        width: parent === null ? 0 : parent.width
         radius: 30
 
         SpeechBubble {
             id: bubble
-            //TODO get
-           // anchors.fill: parent
+
             anchors.left: parent.left
             anchors.right: parent.right
             anchors.top: parent.top
             anchors.leftMargin: model.isButton || model.isYesOrNo ? parent.width / 2  - 50 : model.isLeft ? parent.width / 3 : 10
             anchors.rightMargin: model.isButton || model.isYesOrNo ? parent.width / 2  - 50 : model.isLeft ? 10 : parent.width / 3
+
+            // TODO cleanup this historical grown mess
             leftSide: model.isLeft ? model.isLeft : false
             textBubble: model.isText ? model.isText : false
             dropDownBubble: model.isDropDown ? model.isDropDown  : false

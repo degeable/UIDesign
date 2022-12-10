@@ -6,6 +6,7 @@ import QtQml.StateMachine 1.12 as SM
 import "styles.js" as Style
 import "pages"
 import "dialogs"
+import "components"
 
 Window {
     id: root
@@ -15,23 +16,53 @@ Window {
     visible: true
     title: "UntitledProject"
 
-    ListModel {
-        id: globalNotificationModel
+    function addNotification(text, type) {
+        globalNotificationModel.append({
+                                           "text": text,
+                                           "type": type,
+                                       })
     }
 
-    Component.onCompleted: {
-        globalNotificationModel.append({
-                                           "text": "Notific 1"
-                                       })
-        globalNotificationModel.append({
-                                           "text": "Notific 2"
-                                       })
+    signal showNotifications
+
+    ListModel {
+        id: globalNotificationModel
+
+        onRowsInserted: toast.show(get(count - 1).text)
+    }
+
+    Timer {
+        interval: 1000
+        repeat: false
+        running: true
+        property int i: 0
+        onTriggered: {
+            addNotification("Your examination \nresults are ready!",
+                            "examination")
+        }
+    }
+
+    Timer {
+        interval: 3000
+        repeat: false
+        running: true
+        property int i: 0
+        onTriggered: {
+            addNotification("Your medication is\nabout to expire!",
+                            "medication")
+        }
+    }
+
+    ToastManager {
+        id: toast
+        onClicked: showNotifications()
     }
 
     StackLayout {
         id: layout
 
         anchors.fill: parent
+
         Behavior on currentIndex {
             NumberAnimation {
                 property: "opacity"
@@ -96,6 +127,14 @@ Window {
                 targetState: appointmentState
                 signal: loginPage.appointmentPage
             }
+            SM.SignalTransition {
+                targetState: homeState
+                signal: root.showNotifications
+                guard: {
+                    homePage.openNotifications = true
+                    return true
+                }
+            }
         }
 
         SM.State {
@@ -125,6 +164,22 @@ Window {
             SM.SignalTransition {
                 targetState: appointmentState
                 signal: homePage.appointmentPage
+            }
+            SM.SignalTransition {
+                targetState: prescriptionState
+                signal: homePage.medicationNotificationClicked
+            }
+            SM.SignalTransition {
+                targetState: examState
+                signal: homePage.examResultNotificationClicked
+            }
+            SM.SignalTransition {
+                targetState: homeState
+                signal: root.showNotifications
+                guard: {
+                    homePage.openNotifications = true
+                    return true
+                }
             }
         }
 
@@ -156,6 +211,14 @@ Window {
                 targetState: appointmentState
                 signal: accountPage.appointmentPage
             }
+            SM.SignalTransition {
+                targetState: homeState
+                signal: root.showNotifications
+                guard: {
+                    homePage.openNotifications = true
+                    return true
+                }
+            }
         }
 
         SM.State {
@@ -186,6 +249,14 @@ Window {
                 targetState: appointmentState
                 signal: examPage.appointmentPage
             }
+            SM.SignalTransition {
+                targetState: homeState
+                signal: root.showNotifications
+                guard: {
+                    homePage.openNotifications = true
+                    return true
+                }
+            }
         }
         SM.State {
             id: prescriptionState
@@ -215,6 +286,14 @@ Window {
                 targetState: appointmentState
                 signal: prescriptionPage.appointmentPage
             }
+            SM.SignalTransition {
+                targetState: homeState
+                signal: root.showNotifications
+                guard: {
+                    homePage.openNotifications = true
+                    return true
+                }
+            }
         }
         SM.State {
             id: appointmentState
@@ -243,6 +322,14 @@ Window {
             SM.SignalTransition {
                 targetState: appointmentState
                 signal: appointmentPage.appointmentPage
+            }
+            SM.SignalTransition {
+                targetState: homeState
+                signal: root.showNotifications
+                guard: {
+                    homePage.openNotifications = true
+                    return true
+                }
             }
         }
     }

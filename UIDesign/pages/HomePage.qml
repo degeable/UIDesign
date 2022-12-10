@@ -13,27 +13,52 @@ BasePage {
 
     property bool newNotification: notificationModel.count > 0 // get length of model
     property ListModel notificationModel: undefined
+    property bool openNotifications: false
+
+    signal examResultNotificationClicked
+    signal medicationNotificationClicked
 
     background: "../images/backgroundPurple.jpg"
 
     headerVisible: false
 
+    onOpenNotificationsChanged: {
+        if (visible) {
+            if (openNotifications) {
+                notificationDialog.open()
+                openNotifications = false
+            }
+        }
+    }
+
     onVisibleChanged: {
-        if (visible)
+        if (visible) {
             homeButton.checked = true
+            if (openNotifications) {
+                notificationDialog.open()
+                openNotifications = false
+            }
+        }
+    }
+
+    Timer {
+        id: notTimer
+        interval: 50
+        running: false
+        onTriggered: {
+            notificationDialog.open()
+        }
     }
 
     Dialog {
         id: notificationDialog
+
         modal: true
 
         anchors.centerIn: parent
         width: parent.width - Style.baseMargin * 10
         height: parent.height - Style.baseMargin * 30
-        standardButtons: Dialog.Ok | Dialog.Cancel
-
-        onAccepted: console.log("Ok clicked")
-        onRejected: console.log("Cancel clicked")
+        standardButtons: Dialog.Ok
 
         Overlay.modal: FastBlur {
             source: ShaderEffectSource {
@@ -41,7 +66,6 @@ BasePage {
                 live: false
             }
             radius: 20
-
         }
 
         header: Label {
@@ -63,6 +87,7 @@ BasePage {
         }
 
         footer: DialogButtonBox {
+            palette.buttonText: "black"
             alignment: Qt.AlignHCenter
             background: Rectangle {
                 anchors.fill: parent
@@ -75,6 +100,7 @@ BasePage {
         background: Rectangle {
             color: "transparent"
             border.color: "black"
+
             radius: 30
         }
         contentItem: Rectangle {
@@ -83,13 +109,13 @@ BasePage {
             color: "white"
             radius: 30
             ListView {
-               anchors.fill: parent
-                anchors.topMargin: dialogHeader.height + 5
+                anchors.fill: parent
+                anchors.topMargin: dialogHeader.height
                 spacing: 15
 
                 model: notificationModel
-                 delegate: Rectangle {
-                    color: Style.blueBase
+                delegate: Rectangle {
+                    color: model.type === "examination" ? Style.darkBlue : Style.blueBase
                     anchors.left: parent.left
                     anchors.right: parent.right
                     anchors.leftMargin: 50
@@ -99,7 +125,11 @@ BasePage {
                     radius: 10
                     MouseArea {
                         anchors.fill: parent
-                        onClicked: console.log(model.text)
+                        onClicked: {
+                            model.type === "examination" ? examResultNotificationClicked() : medicationNotificationClicked()
+                            notificationDialog.close()
+                            notificationModel.remove(index)
+                        }
                     }
 
                     Row {
@@ -107,7 +137,7 @@ BasePage {
                         anchors.centerIn: parent
                         spacing: 20
                         Image {
-                            source: "../icons/bell.svg"
+                            source: model.type === "examination" ? "../icons/examination.svg" : "../icons/pills.svg"
                             width: Style.buttonIconSize
                             height: Style.buttonIconSize
                         }
@@ -137,7 +167,7 @@ BasePage {
         anchors.top: parent.top
         anchors.left: parent.left
         anchors.leftMargin: -40
-        anchors.topMargin: -icon.height / 1.8
+        anchors.topMargin: -icon.height / 2 + 40
 
         scale: 0.5
         source: "../icons/darkLogo.svg"
@@ -149,7 +179,7 @@ BasePage {
         anchors.right: parent.right
         anchors.top: parent.top
         anchors.margins: Style.baseMargin
-        anchors.topMargin: -notificationButton.height / 1.8
+        anchors.topMargin: -notificationButton.height / 1.8 + 40
         anchors.rightMargin: 30
 
         width: Style.buttonIconSize * 2.3
@@ -260,9 +290,9 @@ BasePage {
                 anchors.right: parent.right
 
                 height: 50
-                radius: 10
+                radius: 30
                 Row {
-                    id: row
+                    id: newsItemRow
                     anchors.centerIn: parent
                     spacing: 30
                     Image {
@@ -271,7 +301,7 @@ BasePage {
                         height: Style.buttonIconSize
                     }
                     Column {
-                        width: row.width / 2
+                        width: newsItemRow.width / 2
                         Text {
                             text: model.headerText
                         }

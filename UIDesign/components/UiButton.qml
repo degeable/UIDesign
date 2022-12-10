@@ -8,8 +8,9 @@ Button {
 
     palette.buttonText: Style.darkTextColor
 
-    font.family : Style.buttonFont
+   // font.family : Style.buttonFont
     font.pointSize: Style.fontSizeNormal
+    font.bold: true
 
     width: Style.buttonWidth
     background: Rectangle {

@@ -32,13 +32,11 @@ Rectangle {
 
     color: isButton
            || isYesOrNo ? "transparent" : leftSide ? Style.blueBase : Style.lightGray
-    onColorChanged: console.log()
+
     radius: 30
 
     signal addNextBubble
     signal finished
-
-    Component.onCompleted: console.log("bubbleHeight", height)
 
     Rectangle {
         id: corner
@@ -80,11 +78,14 @@ Rectangle {
         visible: bubble.textBubble
         color: Style.darkTextColor
         text: ""
+        width: parent.width
         anchors.top: parent.top
         anchors.left: parent.left
         anchors.right: parent.right
-        anchors.margins: 10
-
+        anchors.margins: 8
+        font.bold: true
+        font.pointSize: Style.fontSizeNormal
+        wrapMode: Text.Wrap
         elide: Text.ElideRight
     }
 
@@ -98,7 +99,9 @@ Rectangle {
             rightPadding: 0
 
             text: dropDown.displayText
-            font: dropDown.font
+           // font: dropDown.font
+            font.pointSize: Style.fontSizeNormal
+            font.bold: true
             color: Style.darkTextColor
             verticalAlignment: Text.AlignVCenter
             elide: Text.ElideRight
@@ -118,10 +121,15 @@ Rectangle {
         anchors.margins: 20
 
         focus: true
-        //color: Qt.lighter(Style.blueBase, 1.2)
+        height: parent.height / 2 - 10
+        width: parent.width - okButton.width
         color: Style.darkTextColor
         visible: bubble.textInputBubble
         placeholderText: "Please describe the injury..."
+        placeholderTextColor: Qt.lighter(Style.darkTextColor, 1.8)
+        font.bold: true
+        font.pointSize: Style.fontSizeNormal
+        wrapMode: Text.Wrap
     }
 
     Rectangle {
@@ -137,6 +145,8 @@ Rectangle {
             anchors.top: parent.top
             anchors.left: parent.left
             color: Style.darkTextColor
+            font.pointSize: Style.fontSizeNormal
+            font.bold: true
         }
         Slider {
             id: slider
@@ -189,6 +199,8 @@ Rectangle {
             contentItem: Text {
                 text: internalBtn.text
                 color: Style.darkTextColor
+                font.pointSize: Style.fontSizeNormal
+                font.bold: true
                 leftPadding: internalBtn.indicator.width + internalBtn.spacing
                 verticalAlignment: Text.AlignVCenter
             }
@@ -204,6 +216,8 @@ Rectangle {
             text: "External"
             contentItem: Text {
                 text: externalBtn.text
+                font.pointSize: Style.fontSizeNormal
+                font.bold: true
                 color: Style.darkTextColor
                 leftPadding: internalBtn.indicator.width + internalBtn.spacing
                 verticalAlignment: Text.AlignVCenter
@@ -219,11 +233,11 @@ Rectangle {
     Rectangle {
         color: "transparent"
         anchors.fill: parent
+        anchors.rightMargin: Style.baseMargin
         id: formular
         implicitHeight: childrenRect.height + formModel.count * 18
         visible: bubble.formBubble
         Component.onCompleted: {
-            console.log("size", bubble.formModel)
             for (var i = 0; i < bubble.formModel.length; i++) {
                 formModel.append({
                                      "text": bubble.formModel[i]
@@ -241,22 +255,25 @@ Rectangle {
                 model: formModel
                 Row {
                     visible: currentIndex !== 0
-                    Label {
+                    Text {
                         id: lab
                         text: model.text
                         color: Style.darkTextColor
-                        rightPadding: 30
+                        font.bold: true
+                        font.pointSize: Style.fontSizeNormal
                         horizontalAlignment: Text.AlignLeft
-                        //                        Component.onCompleted: {
-                        //                            while (text.length < 10) {
-                        //                                text = text + " "
-                        //                            }
-                        //                        }
+                        width: bubble.width / 2 - 5//parent.width / 2
                     }
-                    TextField {
+//                    // FIXME align
+//                    Item {
+//                        Layout.fillWidth: true
+//                    }
+
+                    TextInput {
                         id: feld
-                        color: Style.darkTextColor
                         Layout.fillWidth: true
+
+                        color: Style.darkTextColor
                     }
                 }
             }
@@ -272,16 +289,16 @@ Rectangle {
     }
 
     Rectangle {
-
-        color: "transparent"
-        anchors.fill: parent
         id: date
 
+        property var model: bubble.dateModel
+
+        anchors.fill: parent
+
+        color: "transparent"
         visible: bubble.isDate
 
-        property var model: bubble.dateModel
         Component.onCompleted: {
-            console.log("visible", visible)
             for (var i = 0; i < model.length; i++) {
                 dateModel.append({
                                      "text": bubble.dateModel[i]
@@ -293,7 +310,7 @@ Rectangle {
             anchors.fill: parent
             anchors.margins: 20
             columns: 1
-            rows: 1 //formModel.count
+            rows: 1
             Repeater {
                 model: dateModel
                 RadioButton {
@@ -303,6 +320,8 @@ Rectangle {
                     contentItem: Text {
                         text: dateBtn.text
                         color: Style.darkTextColor
+                        font.pointSize: Style.fontSizeNormal
+                        font.bold: true
                         leftPadding: dateBtn.indicator.width + dateBtn.spacing
                         verticalAlignment: Text.AlignVCenter
                     }
@@ -315,19 +334,20 @@ Rectangle {
     UiButton {
         id: okButton
 
-        width: 50
+        width: 60
         height: 25
-        text: "Apply"
+        text: "Next"
         anchors.right: parent.right
         anchors.bottom: parent.bottom
-        anchors.rightMargin: 15
-        anchors.bottomMargin: 15
+        anchors.rightMargin: 5
+        anchors.bottomMargin: 5
         visible: leftSide && !bubble.isYesOrNo
         onClicked: {
             visible = false
             addNextBubble()
         }
     }
+
     Row {
         anchors.centerIn: parent
         anchors.margins: 50
@@ -339,11 +359,11 @@ Rectangle {
             // TODO make this redoable this somehow
             width: 100
             height: 40
-            onTextChanged: console.log("buttonText:", yes.text)
             onClicked: {
                 addNextBubble()
                 enabled = false
                 no.enabled = false
+                checked = true
             }
         }
         UiButton {
@@ -351,7 +371,6 @@ Rectangle {
             // TODO make this redoable this somehow
             width: 100
             height: 40
-            onTextChanged: console.log("buttonText:", no.text)
 
             onClicked: {
                 addNextBubble()

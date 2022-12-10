@@ -15,12 +15,16 @@ Rectangle {
     signal examinationPage
     signal appointmentPage
     signal prescriptionPage
+    signal back
 
     property int buttonId
     property alias background: background.source
     property alias backgroundOpacity: background.opacity
     property alias headerVisible: header.visible
+    property alias headerColor: header.color
     property alias footerVisible: footer.visible
+    property alias headerButton: headerButton
+    property alias headerText: headerText.text
     default property alias contents: content.data
 
     property alias homeButton: homeButton
@@ -81,19 +85,42 @@ Rectangle {
         height: Style.headerHeight
         color: Style.headerColor
         z: 2
-        Rectangle {
-            anchors.left: header.left
-            anchors.right: header.right
-            anchors.top: header.bottom
-            height: 1
-            color: Style.lighterGray
+
+        IconButton {
+            id: headerButton
+
+            anchors.left: parent.left
+            anchors.top: parent.top
+            anchors.margins: Style.baseMargin
+            anchors.topMargin: Style.baseMargin * 2
+
+            showBorder: false
+
+            image.width: Style.roundButtonHeight - Style.baseMargin
+            image.height: Style.roundButtonHeight - Style.baseMargin
+
+            onClicked: back()
+        }
+
+        Text {
+            id: headerText
+
+            anchors.centerIn: parent
+            anchors.margins: Style.baseMargin
+
+
+            font.bold: false
+            font.pointSize: 35
+
+            color: Style.darkTextColor
+            opacity: 0.9
         }
     }
 
     Item {
         id: content
 
-        anchors.top: header.bottom
+        anchors.top: header.visible ? header.bottom : root.top
         anchors.bottom: footer.top
         anchors.left: parent.left
         anchors.right: parent.right
