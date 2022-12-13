@@ -74,7 +74,7 @@ BaseDialog {
 
         ListElement {
             isText: true
-            text: "Anvil Ibuprofen 200 for delivery.\nPlease confirm"
+            text: "Anvil Ibuprofen 200 for delivery.\nPlease confirm."
         }
 
         ListElement {

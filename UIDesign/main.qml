@@ -14,7 +14,7 @@ Window {
     height: 620
 
     visible: true
-    title: "UntitledProject"
+    title: "UiDesign"
 
     function addNotification(text, type) {
         globalNotificationModel.append({
@@ -149,7 +149,7 @@ Window {
                 signal: homePage.appointmentPage
             }
             SM.SignalTransition {
-                targetState: prescriptionPage
+                targetState: prescriptionState
                 signal: homePage.medicationNotificationClicked
             }
             SM.SignalTransition {
