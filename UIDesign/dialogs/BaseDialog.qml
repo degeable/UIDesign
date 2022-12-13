@@ -9,6 +9,10 @@ Rectangle {
 
     signal done
 
+    onDone: {
+        console.log("doneTriggerd")
+    }
+
     property ListModel bubbleModel: undefined
     property ListModel initialModel: undefined
     property alias actualModel: content.actualModel

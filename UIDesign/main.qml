@@ -31,30 +31,10 @@ Window {
         onRowsInserted: toast.show(get(count - 1).text)
     }
 
-    Timer {
-        interval: 1000
-        repeat: false
-        running: true
-        property int i: 0
-        onTriggered: {
-            addNotification("Your examination \nresults are ready!",
-                            "examination")
-        }
-    }
-
-    Timer {
-        interval: 3000
-        repeat: false
-        running: true
-        property int i: 0
-        onTriggered: {
-            addNotification("Your medication is\nabout to expire!",
-                            "medication")
-        }
-    }
-
     ToastManager {
         id: toast
+
+        anchors.topMargin: 10
         onClicked: showNotifications()
     }
 
@@ -89,6 +69,9 @@ Window {
         }
         AppointmentPage {
             id: appointmentPage
+        }
+        ReportPage {
+            id: reportPage
         }
     }
 
@@ -166,11 +149,11 @@ Window {
                 signal: homePage.appointmentPage
             }
             SM.SignalTransition {
-                targetState: prescriptionState
+                targetState: prescriptionPage
                 signal: homePage.medicationNotificationClicked
             }
             SM.SignalTransition {
-                targetState: examState
+                targetState: reportState
                 signal: homePage.examResultNotificationClicked
             }
             SM.SignalTransition {
@@ -180,6 +163,10 @@ Window {
                     homePage.openNotifications = true
                     return true
                 }
+            }
+            SM.SignalTransition {
+                targetState: reportState
+                signal: homePage.reportPage
             }
         }
 
@@ -218,6 +205,10 @@ Window {
                     homePage.openNotifications = true
                     return true
                 }
+            }
+            SM.SignalTransition {
+                targetState: reportState
+                signal: accountPage.reportPage
             }
         }
 
@@ -322,6 +313,44 @@ Window {
             SM.SignalTransition {
                 targetState: appointmentState
                 signal: appointmentPage.appointmentPage
+            }
+            SM.SignalTransition {
+                targetState: homeState
+                signal: root.showNotifications
+                guard: {
+                    homePage.openNotifications = true
+                    return true
+                }
+            }
+        }
+
+        SM.State {
+            id: reportState
+
+            onEntered: layout.currentIndex = 6
+            SM.SignalTransition {
+                targetState: homeState
+                signal: reportPage.homePage
+            }
+            SM.SignalTransition {
+                targetState: examState
+                signal: reportPage.examinationPage
+            }
+            SM.SignalTransition {
+                targetState: loginState
+                signal: reportPage.loginPage
+            }
+            SM.SignalTransition {
+                targetState: accountState
+                signal: reportPage.accountPage
+            }
+            SM.SignalTransition {
+                targetState: prescriptionState
+                signal: reportPage.prescriptionPage
+            }
+            SM.SignalTransition {
+                targetState: appointmentState
+                signal: reportPage.appointmentPage
             }
             SM.SignalTransition {
                 targetState: homeState

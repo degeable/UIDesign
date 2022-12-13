@@ -239,28 +239,28 @@ BasePage {
             id: newsModel
 
             ListElement {
-                iconLeft: "../icons/news.svg"
+                iconLeft: "../icons/medicine.svg"
                 iconRight: "../icons/next.svg"
-                headerText: "News1"
-                text: "Some news in detail"
+                headerText: "COVID-19"
+                text: "Get the latest news!"
+            }
+            ListElement {
+                iconLeft: "../icons/pills.svg"
+                iconRight: "../icons/next.svg"
+                headerText: "Need insurance?"
+                text: "Great Deals here!"
+            }
+            ListElement {
+                iconLeft: "../icons/report.svg"
+                iconRight: "../icons/next.svg"
+                headerText: "HealthCare.gov"
+                text: "Get 2023 health coverage"
             }
             ListElement {
                 iconLeft: "../icons/news.svg"
                 iconRight: "../icons/next.svg"
-                headerText: "News2"
-                text: "Some news in detail"
-            }
-            ListElement {
-                iconLeft: "../icons/news.svg"
-                iconRight: "../icons/next.svg"
-                headerText: "News4"
-                text: "Some news in detail"
-            }
-            ListElement {
-                iconLeft: "../icons/news.svg"
-                iconRight: "../icons/next.svg"
-                headerText: "News4"
-                text: "Some news in detail"
+                headerText: "Diet tips!"
+                text: "Get fit and healthy."
             }
             ListElement {
                 iconLeft: "../icons/news.svg"
@@ -278,19 +278,76 @@ BasePage {
             anchors.fill: parent
             anchors.leftMargin: Style.baseMargin * 3
             anchors.rightMargin: Style.baseMargin * 3
-            anchors.topMargin: 30
+            anchors.topMargin: 20
             anchors.bottomMargin: 50
 
-            interactive: true
+            interactive: false
 
             model: newsModel
             delegate: Rectangle {
+                id: newsDelegate
                 color: Style.lightPurple
                 anchors.left: parent.left
                 anchors.right: parent.right
 
                 height: 50
-                radius: 30
+                radius: 5
+
+                property bool vis: true
+               // onVisibleChanged: vis = visible
+                Component.onDestruction: console.log("destruct")
+                state: vis ? "Visible" : "Invisible"
+                states: [
+                    State{
+                        name: "Visible"
+                        PropertyChanges{target: newsDelegate; opacity: 1.0}
+                        PropertyChanges{target: newsDelegate; visible: true}
+                    },
+                    State{
+                        name:"Invisible"
+                        PropertyChanges{target: newsDelegate; opacity: 0.0}
+                        PropertyChanges{target: newsDelegate; visible: false}
+                    }
+                ]
+
+                transitions: [
+                    Transition {
+                        from: "Visible"
+                        to: "Invisible"
+
+                        SequentialAnimation{
+                            NumberAnimation {
+                                target: newsDelegate
+                                property: "opacity"
+                                duration: 500
+                                easing.type: Easing.InOutQuad
+                            }
+                            NumberAnimation {
+                                target: newsDelegate
+                                property: "visible"
+                                duration: 0
+                            }
+                        }
+                    },
+
+                    Transition {
+                        from: "Invisible"
+                        to: "Visible"
+                        SequentialAnimation{
+                            NumberAnimation {
+                                target: newsDelegate
+                                property: "visible"
+                                duration: 0
+                            }
+                            NumberAnimation {
+                                target: newsDelegate
+                                property: "opacity"
+                                duration: 500
+                                easing.type: Easing.InOutQuad
+                            }
+                        }
+                    }
+                ]
                 Row {
                     id: newsItemRow
                     anchors.centerIn: parent

@@ -7,6 +7,7 @@ Button {
     id: button
 
     property color baseColor: "transparent"
+    property color pressedColor: Style.purpleBase
     property alias source: image.source
     property alias image: image
     property alias underText: text.text
@@ -45,7 +46,7 @@ Button {
 
             anchors.fill: image
             source:image
-            color: button.pressed || button.checked ? Style.purpleBase : Style.darkGray
+            color: button.pressed || button.checked ? button.pressedColor : Style.darkGray
             antialiasing: true
             visible: image.source
         }

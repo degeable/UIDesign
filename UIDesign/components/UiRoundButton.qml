@@ -10,7 +10,7 @@ RoundButton {
 
    font.pointSize: Style.fontSizeNormal
    font.bold: true
-   palette.buttonText: Style.darkTextColor
+   palette.buttonText: Style.lightTextColor
 
    width: Style.roundButtonWidth
    height: Style.roundButtonHeight

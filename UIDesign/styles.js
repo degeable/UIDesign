@@ -19,6 +19,7 @@ var darkTextColor = "#2D2D3D"
 var lightTextColor = lightGray
 var headerColor = "white"
 var footerColor = "white"
+var red = "#ff5d7a"
 
 // SIZE AND STUFF
 var buttonSpacing = 12

@@ -6,6 +6,8 @@ import "../styles.js" as Style
 Rectangle {
     id: bubble
 
+    // TODO this needs major rewrite. Historically grown.
+
     property alias text: text.text
     property alias dropModel: dropDown.model
     property var formModel: undefined
@@ -14,6 +16,8 @@ Rectangle {
     property bool textBubble: false
     property bool dropDownBubble: false
     property bool formBubble: false
+    property bool personalForm: false
+    property bool insuranceForm: false
     property bool painLevelBubble: false
     property bool textInputBubble: false
     property bool isButton: false
@@ -21,14 +25,14 @@ Rectangle {
     property bool isYesOrNo: false
     property alias dropDown: dropDown
     property bool showCorners: true
-    property alias yesText:  yes.text
+    property alias yesText: yes.text
     property alias noText: no.text
 
     width: root.width / 1.5
     height: isButton
             || isYesOrNo ? 40 : Math.max(
                                Style.bubbleMinHeight,
-                               painRect.visible ? painRect.implicitHeight + 20 : formular.visible ? formular.implicitHeight + 20 : 0)
+                               painRect.visible ? painRect.implicitHeight + 20 : formular.visible ? formular.implicitHeight : 0)
 
     color: isButton
            || isYesOrNo ? "transparent" : leftSide ? Style.blueBase : Style.lightGray
@@ -66,6 +70,8 @@ Rectangle {
         id: button
 
         visible: bubble.isButton
+
+        palette.buttonText: Style.darkTextColor
         anchors.fill: parent
         anchors.margins: 5
         text: bubble.text
@@ -99,7 +105,6 @@ Rectangle {
             rightPadding: 0
 
             text: dropDown.displayText
-           // font: dropDown.font
             font.pointSize: Style.fontSizeNormal
             font.bold: true
             color: Style.darkTextColor
@@ -204,9 +209,9 @@ Rectangle {
                 leftPadding: internalBtn.indicator.width + internalBtn.spacing
                 verticalAlignment: Text.AlignVCenter
             }
-
             ButtonGroup.group: buttonGrp
         }
+
         RadioButton {
             id: externalBtn
             anchors.left: parent.left
@@ -226,6 +231,7 @@ Rectangle {
         }
     }
 
+    // TODO remove
     ListModel {
         id: formModel
     }
@@ -235,48 +241,24 @@ Rectangle {
         anchors.fill: parent
         anchors.rightMargin: Style.baseMargin
         id: formular
-        implicitHeight: childrenRect.height + formModel.count * 18
+        implicitHeight: childrenRect.height + formModel.count * 18 + 25
         visible: bubble.formBubble
+        // TODO remove
         Component.onCompleted: {
             for (var i = 0; i < bubble.formModel.length; i++) {
                 formModel.append({
-                                     "text": bubble.formModel[i]
+                                     "index": bubble.formModel[i].split(":")[0],
+                                     "text": bubble.formModel[i].split(":")[1]
                                  })
             }
         }
 
-        GridLayout {
-            id: layout
-            anchors.fill: parent
-            anchors.margins: 20
-            columns: 1
-            rows: formModel.count
-            Repeater {
-                model: formModel
-                Row {
-                    visible: currentIndex !== 0
-                    Text {
-                        id: lab
-                        text: model.text
-                        color: Style.darkTextColor
-                        font.bold: true
-                        font.pointSize: Style.fontSizeNormal
-                        horizontalAlignment: Text.AlignLeft
-                        width: bubble.width / 2 - 5//parent.width / 2
-                    }
-//                    // FIXME align
-//                    Item {
-//                        Layout.fillWidth: true
-//                    }
+        FormularLayout {
+            id: formlayout
 
-                    TextInput {
-                        id: feld
-                        Layout.fillWidth: true
+            visible: formBubble
 
-                        color: Style.darkTextColor
-                    }
-                }
-            }
+            model: personalForm ? personalModel : insuranceModel //? insuranceModel : undefined
         }
     }
 
@@ -308,14 +290,14 @@ Rectangle {
 
         GridLayout {
             anchors.fill: parent
-            anchors.margins: 20
+            anchors.leftMargin: 18
             columns: 1
             rows: 1
             Repeater {
                 model: dateModel
                 RadioButton {
                     id: dateBtn
-                    checked: currentIndex === 1 ? true : false
+                    checked: false
                     text: model.text
                     contentItem: Text {
                         text: dateBtn.text
@@ -334,18 +316,20 @@ Rectangle {
     UiButton {
         id: okButton
 
-        width: 60
-        height: 25
-        text: "Next"
         anchors.right: parent.right
         anchors.bottom: parent.bottom
         anchors.rightMargin: 5
         anchors.bottomMargin: 5
+
+        width: 60
+        height: 25
+
+        enabled: true//bubble.formBubble ? formlayout.correctInput : true
+
+        text: "Next"
+        palette.buttonText: Style.darkTextColor
         visible: leftSide && !bubble.isYesOrNo
-        onClicked: {
-            visible = false
-            addNextBubble()
-        }
+        onClicked: addNextBubble()
     }
 
     Row {
@@ -357,6 +341,7 @@ Rectangle {
         UiButton {
             id: yes
             // TODO make this redoable this somehow
+            palette.buttonText: Style.darkTextColor
             width: 100
             height: 40
             onClicked: {
@@ -369,6 +354,7 @@ Rectangle {
         UiButton {
             id: no
             // TODO make this redoable this somehow
+            palette.buttonText: Style.darkTextColor
             width: 100
             height: 40
 

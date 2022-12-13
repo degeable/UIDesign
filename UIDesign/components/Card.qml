@@ -20,11 +20,11 @@ Rectangle {
     property alias headerIcon: headerIcon.source
     property alias headerIconColor: overlay.color
     default property alias contents: content.data
-
+    property color backgroundColor: Style.backgroundDark
 
     height: Style.bubbleMinHeight
 
-    color: Style.backgroundDark
+    color: backgroundColor
     radius: 30
 
     Rectangle {

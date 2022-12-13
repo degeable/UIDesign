@@ -1,14 +1,18 @@
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
+#include <QQmlContext>
 #include <QFont>
+#include "backend.h"
 
 int main(int argc, char *argv[])
 {
     QGuiApplication app(argc, argv);
 
     QQmlApplicationEngine engine;
-//app.setFont(QFont("Avenir", 12));
-  //  app.setFont(QFont("Microsoft Sans Serif", 12));
+
+    backend personalModel(0);
+    backend insuranceModel(1);
+    backend examinationModel(2);
 
     const QUrl url(u"qrc:/UiDesign/main.qml"_qs);
     QObject::connect(&engine, &QQmlApplicationEngine::objectCreated,
@@ -16,7 +20,12 @@ int main(int argc, char *argv[])
         if (!obj && url == objUrl)
             QCoreApplication::exit(-1);
     }, Qt::QueuedConnection);
+
     engine.load(url);
+
+    engine.rootContext()->setContextProperty("personalModel", &personalModel);
+    engine.rootContext()->setContextProperty("insuranceModel", &insuranceModel);
+    engine.rootContext()->setContextProperty("examinationModel", &examinationModel);
 
     return app.exec();
 }

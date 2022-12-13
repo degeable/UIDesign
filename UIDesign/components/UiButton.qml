@@ -6,7 +6,7 @@ Button {
 
     property color baseColor: Style.blueBase
 
-    palette.buttonText: Style.darkTextColor
+    palette.buttonText: Style.lightTextColor
 
    // font.family : Style.buttonFont
     font.pointSize: Style.fontSizeNormal

@@ -1,6 +1,7 @@
 import QtQuick 6.2
 import QtQuick.Window 6.2
 import QtQuick.Controls 2.15
+import Qt5Compat.GraphicalEffects
 import "../styles.js" as Style
 import "../components"
 
@@ -15,6 +16,7 @@ Rectangle {
     signal examinationPage
     signal appointmentPage
     signal prescriptionPage
+    signal reportPage
     signal back
 
     property int buttonId
@@ -25,8 +27,14 @@ Rectangle {
     property alias footerVisible: footer.visible
     property alias headerButton: headerButton
     property alias headerText: headerText.text
+    property alias centerImageSorce: centerImage.source
+    property alias centerImageVisible: centerImage.visible
+    property alias centerImageColor: overlay.color
+    property bool overlayVisible: true
+
     default property alias contents: content.data
 
+    property alias buttonColor: footer.buttonColor
     property alias homeButton: homeButton
     property alias examinationButton: examinationButton
     property alias accountButton: accountButton
@@ -115,6 +123,31 @@ Rectangle {
             color: Style.darkTextColor
             opacity: 0.9
         }
+
+        Image {
+            id: centerImage
+
+            visible: false
+            width: header.height - 5
+            height: header.height - 5
+
+            anchors.topMargin: 5
+
+            fillMode: Image.PreserveAspectFit
+
+            anchors.centerIn: parent
+            anchors.margins: Style.baseMargin
+        }
+
+        ColorOverlay {
+            id: overlay
+
+            anchors.fill: centerImage
+            source:centerImage
+            color: Style.blueBase
+            antialiasing: true
+            visible: root.overlayVisible && centerImage.visible
+        }
     }
 
     Item {
@@ -128,6 +161,8 @@ Rectangle {
 
     Rectangle {
         id: footer
+
+        property color buttonColor: Style.purpleBase
 
         anchors.bottom: parent.bottom
         anchors.left: parent.left
@@ -144,6 +179,7 @@ Rectangle {
             IconButton {
                 id: examinationButton
 
+                pressedColor: Style.blueBase
                 checkable: true
                 width: parent.width / 5
                 height: parent.height
@@ -157,6 +193,7 @@ Rectangle {
             IconButton {
                 id: prescriptionButton
 
+                pressedColor: footer.buttonColor
                 checkable: true
                 width: parent.width / 5
                 height: parent.height
@@ -170,6 +207,7 @@ Rectangle {
             IconButton {
                 id: homeButton
 
+                pressedColor: Style.darkBlue
                 checked: true
                 checkable: true
                 width: parent.width / 5
@@ -183,6 +221,7 @@ Rectangle {
             IconButton {
                 id: appointmentButton
 
+                pressedColor: footer.buttonColor
                 checked: false
                 checkable: true
                 width: parent.width / 5
@@ -197,6 +236,7 @@ Rectangle {
             IconButton {
                 id: accountButton
 
+                pressedColor: Style.blueBase
                 checkable: true
                 width: parent.width / 5
                 height: parent.height

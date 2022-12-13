@@ -24,7 +24,7 @@ BasePage {
         } else if (name === "Insurance Information") {
             insuranceInfo.visible = true
         } else if (name === "Examination Results") {
-            reportPage()
+            examinationResults.visible = true
         }
     }
 
@@ -34,6 +34,57 @@ BasePage {
     headerVisible: true//!listView.visible
     headerText: "Account"
     headerColor: "transparent"
+
+    Card {
+        id: examinationResults
+
+        anchors.fill: parent
+        anchors.margins: 60
+        anchors.topMargin: 100
+        anchors.bottomMargin: 60
+
+        headerColor: Style.blueBase
+        headerHeight: Style.roundButtonHeight
+        headerText: "Examination Results"
+        headerTextColor: Style.lightTextColor
+        headerIconColor: Style.lightTextColor
+        headerFont.bold: true
+        headerFont.pointSize: 20
+
+        visible: false
+
+        mouseArea.enabled: false
+
+        ListView {
+            anchors.centerIn: parent
+
+            model: examinationModel
+            delegate: Rectangle {
+                color: Style.lightTextColor
+                Text {
+                    id: keyText
+                    anchors.centerIn: parent
+                    text: model.key
+                }
+                Text {
+                    anchors.right: parent.right
+                    anchors.left: keyText.right
+                    text: model.value
+                }
+            }
+        }
+
+        UiButton {
+            anchors.left: parent.left
+            anchors.right: parent.right
+            anchors.bottom: parent.bottom
+            text: "Okay"
+
+            onClicked:{
+                examinationResults.visible = false
+            }
+        }
+    }
 
     Card {
         id: personalInfo
@@ -121,7 +172,7 @@ BasePage {
         anchors.left: parent.left
         anchors.right: parent.right
 
-        visible: !personalInfo.visible && !insuranceInfo.visible //&& !examinationResults.visible
+        visible: !personalInfo.visible && !insuranceInfo.visible && !examinationResults.visible
 
         fillMode: Image.PreserveAspectFit
 
@@ -133,7 +184,7 @@ BasePage {
 
     Text {
         id: nameText
-        visible: !personalInfo.visible && !insuranceInfo.visible //&& !examinationResults.visible
+        visible: !personalInfo.visible && !insuranceInfo.visible && !examinationResults.visible
 
         anchors.top: image.bottom
         anchors.horizontalCenter: image.horizontalCenter
@@ -203,7 +254,7 @@ BasePage {
         width: parent.width
         height: parent.height / 2
 
-        visible: !personalInfo.visible && !insuranceInfo.visible //&& !examinationResults.visible
+        visible: !personalInfo.visible && !insuranceInfo.visible && !examinationResults.visible
 
         delegate: UiRoundButton {
             id: comp
@@ -244,7 +295,7 @@ BasePage {
         anchors.leftMargin: parent.width / 3
         anchors.rightMargin: parent.width / 3
 
-        visible: !personalInfo.visible && !insuranceInfo.visible //&& !examinationResults.visible
+        visible: !personalInfo.visible && !insuranceInfo.visible && !examinationResults.visible
         text: "Logout"
         baseColor: Style.red
         onClicked: exitDialog.open()

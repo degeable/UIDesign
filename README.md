@@ -12,3 +12,5 @@ The sources folder contains all the sources for the project and the website.
 
 [FTP Web](https://marius.cybranceehost.com:8443/)
 
+
+# Thanks to [jonmcclung](https://gist.github.com/jonmcclung) for his [Toast component](https://gist.github.com/jonmcclung/bae669101d17b103e94790341301c129)! 

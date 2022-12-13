@@ -27,7 +27,7 @@ BaseDialog {
                 isPainLevel: false
                 isButton: false
                 isInput: false
-                text: "Choose a Painlevel"
+                text: "Now please choose a painlevel to detemine how severe the injury is."
             }
             ListElement {
                 isLeft: true
@@ -50,7 +50,7 @@ BaseDialog {
                 isPainLevel: false
                 isInput: false
                 isButton: false
-                text: "Please describe the injury."
+                text: "Thank you! Please describe the injury with a few words."
             }
             ListElement {
                 isLeft: true
@@ -101,7 +101,7 @@ BaseDialog {
                 isForm: false
                 isInput: false
                 isButton: false
-                text: "I am going to ask you some questions to gather information about your injury"
+                text: "I am going to ask you some questions to gather information about your injury."
             }
 
             ListElement {
@@ -113,7 +113,19 @@ BaseDialog {
                 isForm: false
                 isInput: false
                 isButton: false
-                text: "Please choose the bodypart"
+                text: "You can always scroll back and change your input."
+            }
+
+            ListElement {
+                isLeft: false
+                isText: true
+                isDropDown: false
+                dropDownModel: ""
+                isPainLevel: false
+                isForm: false
+                isInput: false
+                isButton: false
+                text: "At first, please choose the bodypart thats injured."
             }
             ListElement {
                 isLeft: true

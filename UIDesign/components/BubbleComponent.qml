@@ -10,6 +10,8 @@ import "../styles.js" as Style
         width: parent === null ? 0 : parent.width
         radius: 30
 
+     //   property alias formRepeater: bubble.formRepeater
+
         SpeechBubble {
             id: bubble
 
@@ -27,6 +29,8 @@ import "../styles.js" as Style
             text: model.text ? model.text : ""
             dropModel: model.dropDownModel ? model.dropDownModel.split(",") : ""
             formModel: model.formModel ? model.formModel.split(",") : ""
+            personalForm: model.personalForm ? model.personalForm : false
+            insuranceForm: model.insuranceForm ? model.insuranceForm : false
             painLevelBubble: model.isPainLevel ? model.isPainLevel  : false
             textInputBubble: model.isInput ? model.isInput : false
             dateModel: model.dateModel ? model.dateModel.split(",") : ""

@@ -24,9 +24,13 @@ BasePage {
     headerButton.visible: !welcomeScreen.visible && !doneScreen.visible
     headerText: welcomeScreen.visible
                 || doneScreen.visible ? "Virtual Examination" : ""
-    headerColor: welcomeScreen.visible
-                 || doneScreen.visible ? Style.headerColor : "transparent"
+    headerColor: Style.headerColor// welcomeScreen.visible
+                 //|| doneScreen.visible ? Style.headerColor : "transparent"
     onBack: welcomeScreen.visible = true
+
+    centerImageSorce: "../icons/doctor.png"
+    centerImageVisible: examinationDialog.visible
+    overlayVisible: false
 
     Rectangle {
         id: welcomeScreen
@@ -37,7 +41,7 @@ BasePage {
             anchors.right: parent.right
             anchors.left: parent.left
             anchors.top: parent.top
-            anchors.topMargin: 65
+            anchors.topMargin: 40
 
             fillMode: Image.PreserveAspectFit
 
@@ -49,6 +53,7 @@ BasePage {
         Text {
             anchors.centerIn: parent
             elide: Text.ElideMiddle
+            horizontalAlignment: Text.AlignHCenter
             text: "Hey I am doctor Rey!\nReady for your examination?"
             font.pointSize: 20
         }
@@ -77,7 +82,7 @@ BasePage {
             anchors.right: parent.right
             anchors.left: parent.left
             anchors.top: parent.top
-            anchors.topMargin: 65
+            anchors.topMargin: 40
 
             fillMode: Image.PreserveAspectFit
 
@@ -89,6 +94,7 @@ BasePage {
         Text {
             anchors.centerIn: parent
             elide: Text.ElideMiddle
+            horizontalAlignment: Text.AlignHCenter
             text: "Thank you!\nYour examination will be reviewed"
             font.pointSize: 20
         }
@@ -107,6 +113,8 @@ BasePage {
                 doneScreen.visible = false
                 welcomeScreen.visible = true
                 examinationDialog.reset()
+                timer.start()
+                timer2.start()
                 homePage()
             }
         }
@@ -141,7 +149,8 @@ BasePage {
 
             z: 2
             text: "Confirm"
-            elide: Label.ElideRight
+            elide: Label.ElideMiddle
+            horizontalAlignment: Label.AlignHCenter
             font.bold: true
             font.pointSize: 20
             color: Style.darkTextColor
@@ -166,6 +175,7 @@ BasePage {
             height: Style.roundButtonHeight
             UiButton {
                 text: "Confirm"
+                palette.buttonText: Style.darkTextColor
                 width: Style.buttonWidth / 2
                 height: Style.roundButtonHeight
                 onClicked: exitDialog.accept()
@@ -173,6 +183,7 @@ BasePage {
             UiButton {
                 text: "Back"
 
+                palette.buttonText: Style.darkTextColor
                 width: Style.buttonWidth / 2
                 height: Style.roundButtonHeight
                 onClicked: exitDialog.reject()
@@ -207,7 +218,8 @@ BasePage {
                 anchors.margins: 10
                 font.bold: true
                 font.pointSize: Style.fontSizeNormal
-                text: "Are you finished? You can review your input and change it again."
+                horizontalAlignment: Text.AlignHCenter
+                text: "Are you finished? \nYou can review your input and change it again."
             }
         }
     }
@@ -219,6 +231,30 @@ BasePage {
 
         onDone: {
             exitDialog.open()
+            centerImageVisible = false
         }
     }
+
+    Timer {
+        id: timer
+        interval: 4000
+        repeat: false
+        running: false
+        onTriggered: {
+            addNotification("Your examination \nresults are ready!",
+                            "examination")
+            examinationModel.append("Tue Dec 13", "Your head injury needs to be looked at by a real doctor. Please book an appointment!")
+        }
+    }
+    Timer {
+        id: timer2
+        interval: 5000
+        repeat: false
+        running: false
+        onTriggered: {
+            addNotification("Your medication \nresults are ready!",
+                            "medication")
+        }
+    }
+
 }

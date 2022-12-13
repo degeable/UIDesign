@@ -1,16 +1,19 @@
 QT += quick
 
 SOURCES += \
+        backend.cpp \
         main.cpp
 
 resources.files = styles.js \
                   main.qml \
+                  Backend.qml \
                   pages/LoginPage.qml \
                   pages/AccountPage.qml \
                   pages/HomePage.qml \
                   pages/ExaminationPage.qml \
                   pages/PrescriptionPage.qml \
                   pages/AppointmentPage.qml \
+                  pages/ReportPage.qml \
                   components/UiButton.qml \
                   components/IconButton.qml \
                   components/UiRoundButton.qml \
@@ -18,7 +21,12 @@ resources.files = styles.js \
                   components/SpeechBubble.qml \
                   components/BubbleList.qml \
                   components/Card.qml \
+                  components/Toast.qml \
+                  components/ToastManager.qml \
+                  components/FormularLayout.qml \
                   dialogs/ExaminationDialog.qml \
+                  dialogs/AppointmentDialog.qml \
+                  dialogs/MedicationDialog.qml \
                   dialogs/BaseDialog.qml \
                   images/backgroundBlue.jpg \
                   images/backgroundGreen.jpg \
@@ -29,7 +37,9 @@ resources.files = styles.js \
                   images/chatGreen.jpg \
                   images/chatGreenLight.jpg \
                   images/chatBlue.jpg \
+                  images/anon.svg \
                   icons/logo.svg \
+                  icons/doctor.png \
                   icons/heart.svg \
                   icons/account.svg \
                   icons/medicine.svg \
@@ -44,6 +54,7 @@ resources.files = styles.js \
                   icons/next.svg \
                   icons/doc.svg \
                   icons/darkLogo.svg \
+                  icons/calendarRound.png \
                   $$files(qml/*.qml) \
                   $$files(pages/*.qml) \
                   $$files(images/*.png) \
@@ -68,7 +79,8 @@ qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
-HEADERS +=
+HEADERS += \
+    backend.h
 
 DISTFILES += \
     components/UiButton.qml \
@@ -80,12 +92,13 @@ DISTFILES += \
     icons/pinkCard.png \
     icons/yellowCard.png \
     images/background.webp \
+    images/meds.png \
     main.qml \
     pages/AppointmentPage.qml \
     pages/BasePage.qml \
     pages/ExaminationPage.qml \
     pages/LoginPage.qml \
-    pages/LoginPage.qml \
     pages/AccountPage.qml \
     pages/PrescriptionPage.qml \
+    pages/ReportPage.qml \
     styles.js

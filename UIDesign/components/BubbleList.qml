@@ -21,6 +21,7 @@ ListView {
         done()
     }
 
+
     ListModel {
         id: actualModel
     }
@@ -35,12 +36,20 @@ ListView {
 
     Timer {
         id: secondBubbleTimer
-        interval: 1800
+        interval: 2500
+        repeat: false
+        running: false
+        onTriggered: actualModel.append(initialModel.get(1))
+    }
+
+    Timer {
+        id: thirdBubbleTimer
+        interval: 3200
         repeat: false
         running: false
         onTriggered: {
-            actualModel.append(initialModel.get(1))
             actualModel.append(initialModel.get(2))
+            actualModel.append(initialModel.get(3))
         }
     }
 
@@ -48,6 +57,7 @@ ListView {
         if (visible && actualModel.count === 0) {
             firstBubbleTimer.start()
             secondBubbleTimer.start()
+            thirdBubbleTimer.start()
         }
     }
 
@@ -56,8 +66,9 @@ ListView {
     spacing: 20
     model: actualModel
 
-    delegate: BubbleComponent {}
-
+    delegate: BubbleComponent {
+    id: bubbleDelegate
+    }
     add: Transition {
         NumberAnimation {
             property: "opacity"

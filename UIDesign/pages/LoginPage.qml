@@ -98,6 +98,13 @@ BasePage {
         logo.opacity = 1
     }
 
+    onVisibleChanged: {
+        if (visible) {
+            buttonList.opacity = 1
+            logo.opacity = 1
+        }
+    }
+
     function buttonClicked(button) {
         if (button === "Login") {
             root.loggedIn = true
