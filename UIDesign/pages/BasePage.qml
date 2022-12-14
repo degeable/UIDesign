@@ -16,6 +16,7 @@ Rectangle {
     signal examinationPage
     signal appointmentPage
     signal prescriptionPage
+    signal bookedAppointmentsPage
     signal reportPage
     signal back
 

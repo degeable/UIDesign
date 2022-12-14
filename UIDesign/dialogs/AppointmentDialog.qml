@@ -97,7 +97,7 @@ BaseDialog {
             isForm: false
             isPainLevel: false
             isInput: false
-            text:   "Okay"
+            text: "Okay"
             dateModel: ""
             isDate: false
             isButton: true

@@ -6,9 +6,9 @@ Theres every thing project related. This repository is just for the implementeta
 
 Unfortunately the WebAssembly kit does not support all packages (yet) and is really buggy. Heres a walkthrough video of the App:
 
-put a video that is located in the repo here
-<iframe src="https://youtu.be/D1jaTS1k6DE" width="560" height="315"></iframe>
+put a video that is located in the repo here:
 
+[![IMAGE ALT TEXT](http://img.youtube.com/vi/O2wslQDSLeg/0.jpg)](http://www.youtube.com/watch?v=O2wslQDSLeg "Video Title")
 
 # sources
 

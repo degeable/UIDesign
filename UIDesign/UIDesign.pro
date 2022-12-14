@@ -95,6 +95,7 @@ DISTFILES += \
     images/meds.png \
     main.qml \
     pages/AppointmentPage.qml \
+    pages/BookedAppointmentsPage.qml \
     pages/BasePage.qml \
     pages/ExaminationPage.qml \
     pages/LoginPage.qml \

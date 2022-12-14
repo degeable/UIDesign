@@ -25,6 +25,8 @@ BasePage {
             insuranceInfo.visible = true
         } else if (name === "Examination Results") {
             reportPage()
+        } else if ( name === "Appointments") {
+            bookedAppointmentsPage()
         }
     }
 
@@ -168,12 +170,17 @@ BasePage {
         }
 
         ListElement {
+            name: "Appointments"
+        }
+
+        ListElement {
             name: "Personal Information"
         }
 
         ListElement {
             name: "Insurance Information"
         }
+
     }
 
     NumberAnimation {

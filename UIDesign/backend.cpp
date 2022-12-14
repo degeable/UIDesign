@@ -20,12 +20,15 @@ backend::backend(int type, QObject* parent)
         }
         // 2 = Exmaination Results
         case 2: {
-            m_data << Data("Mon Dec 12", "Example text for an examination Report.");
+           // m_data << Data("Mon Dec 12", "Example text for an examination Report.");
              break;
         }
+        // 3 = Exmaination Results
+    case 3: {
+      //  m_data << Data("Mon Dec 12, 8am", "Boston Medical Center");
+        break;
     }
-
-
+    }
 }
 
 int backend::rowCount(const QModelIndex &parent) const

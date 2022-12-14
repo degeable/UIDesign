@@ -19,7 +19,7 @@ Window {
     function addNotification(text, type) {
         globalNotificationModel.append({
                                            "text": text,
-                                           "type": type,
+                                           "type": type
                                        })
     }
 
@@ -72,6 +72,9 @@ Window {
         }
         ReportPage {
             id: reportPage
+        }
+        BookedAppointmentsPage {
+            id: bookedAppointmentPage
         }
     }
 
@@ -168,6 +171,10 @@ Window {
                 targetState: reportState
                 signal: homePage.reportPage
             }
+            SM.SignalTransition {
+                targetState: bookedAppointmentState
+                signal: homePage.bookedAppointmentsPage
+            }
         }
 
         SM.State {
@@ -209,6 +216,11 @@ Window {
             SM.SignalTransition {
                 targetState: reportState
                 signal: accountPage.reportPage
+            }
+
+            SM.SignalTransition {
+                targetState: bookedAppointmentState
+                signal: accountPage.bookedAppointmentsPage
             }
         }
 
@@ -322,6 +334,10 @@ Window {
                     return true
                 }
             }
+            SM.SignalTransition {
+                targetState: bookedAppointmentState
+                signal: homePage.bookedAppointmentsPage
+            }
         }
 
         SM.State {
@@ -351,6 +367,44 @@ Window {
             SM.SignalTransition {
                 targetState: appointmentState
                 signal: reportPage.appointmentPage
+            }
+            SM.SignalTransition {
+                targetState: homeState
+                signal: root.showNotifications
+                guard: {
+                    homePage.openNotifications = true
+                    return true
+                }
+            }
+        }
+
+        SM.State {
+            id: bookedAppointmentState
+
+            onEntered: layout.currentIndex = 7
+            SM.SignalTransition {
+                targetState: homeState
+                signal: bookedAppointmentPage.homePage
+            }
+            SM.SignalTransition {
+                targetState: examState
+                signal: bookedAppointmentPage.examinationPage
+            }
+            SM.SignalTransition {
+                targetState: loginState
+                signal: bookedAppointmentPage.loginPage
+            }
+            SM.SignalTransition {
+                targetState: accountState
+                signal: bookedAppointmentPage.accountPage
+            }
+            SM.SignalTransition {
+                targetState: prescriptionState
+                signal: bookedAppointmentPage.prescriptionPage
+            }
+            SM.SignalTransition {
+                targetState: appointmentState
+                signal: bookedAppointmentState.appointmentPage
             }
             SM.SignalTransition {
                 targetState: homeState

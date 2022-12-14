@@ -254,7 +254,7 @@ BasePage {
                 iconLeft: "../icons/report.svg"
                 iconRight: "../icons/next.svg"
                 headerText: "HealthCare.gov"
-                text: "Get 2023 health coverage"
+                text: "Get 2023 coverage"
             }
             ListElement {
                 iconLeft: "../icons/news.svg"

@@ -9,6 +9,8 @@ Rectangle {
 
     signal done
 
+    signal addAppointment(string data)
+
     onDone: {
         console.log("doneTriggerd")
     }

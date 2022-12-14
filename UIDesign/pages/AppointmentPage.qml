@@ -44,7 +44,7 @@ BasePage {
             anchors.right: parent.right
             anchors.left: parent.left
             anchors.top: parent.top
-            anchors.topMargin: 40
+            anchors.topMargin: 30
 
             fillMode: Image.PreserveAspectFit
 
@@ -252,6 +252,8 @@ BasePage {
     AppointmentDialog {
         id: appointmentDialog
 
+
+        onAddAppointment: console.log("appointment Triggered")
         anchors.fill: parent
         visible: !welcomeScreen.visible && !doneScreen.visible
 

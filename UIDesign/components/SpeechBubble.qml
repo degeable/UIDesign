@@ -75,7 +75,9 @@ Rectangle {
         anchors.fill: parent
         anchors.margins: 5
         text: bubble.text
-        onClicked: finished()
+        onClicked: {
+            finished()
+        }
     }
 
     Text {
@@ -294,6 +296,7 @@ Rectangle {
             columns: 1
             rows: 1
             Repeater {
+                id: dateRepeater
                 model: dateModel
                 RadioButton {
                     id: dateBtn
@@ -329,7 +332,14 @@ Rectangle {
         text: "Next"
         palette.buttonText: Style.darkTextColor
         visible: leftSide && !bubble.isYesOrNo
-        onClicked: addNextBubble()
+        onClicked: {
+            for (var i = 0; i < dateRepeater.count; i++){
+                if (dateRepeater.itemAt(i).checked) {
+                    appointmentModel.append(dateRepeater.itemAt(i).text, "Appointment at the Boston Medical Center")
+                }
+            }
+            addNextBubble()
+        }
     }
 
     Row {

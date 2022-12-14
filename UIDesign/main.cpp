@@ -13,6 +13,7 @@ int main(int argc, char *argv[])
     backend personalModel(0);
     backend insuranceModel(1);
     backend examinationModel(2);
+    backend appointmentModel(3);
 
     const QUrl url(u"qrc:/UiDesign/main.qml"_qs);
     QObject::connect(&engine, &QQmlApplicationEngine::objectCreated,
@@ -26,6 +27,7 @@ int main(int argc, char *argv[])
     engine.rootContext()->setContextProperty("personalModel", &personalModel);
     engine.rootContext()->setContextProperty("insuranceModel", &insuranceModel);
     engine.rootContext()->setContextProperty("examinationModel", &examinationModel);
+    engine.rootContext()->setContextProperty("appointmentModel", &appointmentModel);
 
     return app.exec();
 }
