@@ -8,7 +8,7 @@ Unfortunately the WebAssembly kit does not support all packages (yet) and is rea
 
 put a video that is located in the repo here:
 
-[![IMAGE ALT TEXT](http://img.youtube.com/vi/O2wslQDSLeg/0.jpg)](http://www.youtube.com/watch?v=O2wslQDSLeg "Video Title")
+[![YouTube Link](http://img.youtube.com/vi/O2wslQDSLeg/0.jpg)](http://www.youtube.com/watch?v=O2wslQDSLeg "Video Title")
 
 # sources
 
